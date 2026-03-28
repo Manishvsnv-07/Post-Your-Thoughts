@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post It</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="output.css">
+</head>
+
+<body class="bg-zinc-900 w-full h-screen flex flex-col justify-start items-center"  >
+    <div class="main bg-zinc-900 w-[50vw] h-screen flex flex-col justify-start items-center">
+        <form action="/post" method="post">
+            <div class="createpost flex flex-col justify-start items-center">
+                <h1 class="m-5 flex justify-center items-center text-xl text-white w-[80vw]">Hello,<%= userdata.name %>😎</h1>
+                <div
+                class="contentbox pb-2 border shadow-[0px_0px_20px_1px_rgba(240,240,240)] border-black rounded-md w-[80vw] md:w-[45vw] h-[40vh] flex flex-col justify-start items-center bg-white ">
+                <input name="title" type="text" 
+       class="<%= typeof error !=='undefined' ? 'placeholder-red-700' : 'placeholder-grey-300' %> text-black m-2 border px-2 py-2 border-black  w-[70vw] md:w-[40vw] bg-white"
+       placeholder="<%= typeof error !== 'undefined' ? error : 'Title' %>">
+                <textarea name="content"
+                class="<%= typeof error !== 'undefined'? 'placeholder-red-700' : 'placeholder-grey-400' %> m-2 resize-none h-[50vh] border px-2 py-2 border-black w-[70vw] md:w-[40vw] text-black bg-white"
+                placeholder="<%=typeof error !== 'undefined' ? error :'Post Whatever You Want'%>"></textarea>
+                <button type="submit" class="bg-amber-300  rounded-md w-[11vw] md:w-[7vw]">Post</button>
+            </div>
+        </div>
+    </form>
+    
+    
+    <h1 class=" mt-7 text-white">Your Posts</h1>
+    <div class="showposts py-2 my-1 w-[90vw]  flex items-center flex-col gap-7  overflow-y-scroll">
+
+        <% userdata.post.reverse().forEach((post)=>{ %>
+            <div
+            class="yourposts border border-black pb-3 bg-white shadow-[0px_0px_10px_1px_rgba(240,240,240)] w-[80vw] md:w-[45vw] gap-2 rounded-md  text-xl text-black flex-col justify-start items-center">
+            <div class="info py-1 w-full flex justify-between px-3">
+                <h1 class="text-blue-900 text-[15px]">@<%= userdata.username %>
+                </h1>
+                <div class="likeandedit flex gap-2">
+                    <a href="/like/<%= post._id %>">
+                        <% if(post.likes.indexOf(userdata._id)) {%>
+                            <img src="imgs/like.svg"class="unliked invert w-5 hover:cursor-pointer hover:scale-[1.1]" alt="Like">
+                            <% } else { %>
+                                <img src="imgs/fillheart.svg" class="liked w-5 hover:cursor-pointer hover:scale-[1.1]" alt="likeandedit">
+                        <% } %>
+                    </a>
+                    <a href="/delete/<%= post._id %>">
+                        <img src="imgs/delete.svg" class="invert w-5 hover:cursor-pointer hover:scale-[1.1] " alt="Delete">
+                    </a>
+                </div>
+            </div>
+            <div class="titleanddescription flex justify-center items-center flex-col gap-2">
+                <h1 class="hover:cursor-pointer border rounded-md border-black px-2 w-[40vw] md:w-[20vw] h-[5vh] text-[21px] flex items-center justify-center">
+                    <span class="meratext truncate"><%= post.title %></span>
+                </h1>
+                <p class="rounded-md h-[15vh] border text-[15px] w-[70vw] md:w-[40vw] border-black px-2 ">
+                    <%= post.content %>
+                </p>
+            </div>
+        </div>
+        <% }) %>
+    </div>
+</div>
+<script src="/script.js"></script>
+</body>
+
+</html>
