@@ -1,9 +1,11 @@
 import mongoose from "mongoose";
-mongoose.connect(process.env.MONGODB_URI).then(()=>{
-    console.log("Connected").catch((err)=>{
-        console.log(err)
-    })
-})
+import dotenv from "dotenv";
+
+dotenv.config();
+
+mongoose.connect(process.env.MONGODB_URI)
+    .then(()=> console.log("Connected"))
+    .catch((err)=> console.log(err))
 
 const userschema = mongoose.Schema({
     name:{type:String,required:true},

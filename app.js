@@ -1,15 +1,15 @@
+import dotenv from "dotenv"
+dotenv.config();
 import express from "express"
 import bcrypt from "bcrypt"
 import { user } from "./module/user.js"
 import {posts} from "./module/post.js"
 import jwt from "jsonwebtoken"
 import parser from "cookie-parser"
-import dotenv from "dotenv"
 
 const app = express()
 app.use(express.static("public"))
 app.set("view engine", "ejs");
-dotenv.config();
 app.use(parser())
 app.use(express.urlencoded({ extended: true }))
 app.get("/", (req, res) => {
@@ -102,9 +102,7 @@ function islogged(req,res,next){
         next()
     }
 }
-if (require.main === module) {
-  const PORT = process.env.PORT || 3000;
-  app.listen(PORT, () => console.log(`Running on ${PORT}`));
-}
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Running on ${PORT}`));
 
-module.exports = app;
+export default app;
