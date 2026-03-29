@@ -5,7 +5,7 @@ import {posts} from "./module/post.js"
 import jwt from "jsonwebtoken"
 import parser from "cookie-parser"
 const app = express()
-const port = 57911
+const port = process.env.PORT || 3000
 app.use(express.static("public"))
 app.set("view engine", "ejs");
 app.use(parser())
@@ -90,9 +90,6 @@ app.get("/like/:id",islogged,async(req,res)=>{
     await findid.save()
     res.redirect("/profile")
 })
-app.listen(port, () => {
-    console.log(`My Port At ${port}`);
-})
 function islogged(req,res,next){
     if(req.cookies.token === ""){
         res.redirect("/");
@@ -103,3 +100,6 @@ function islogged(req,res,next){
         next()
     }
 }
+app.listen(port, () => {
+    console.log(`My Port At ${port}`);
+})
