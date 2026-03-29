@@ -7,9 +7,16 @@ import {posts} from "./module/post.js"
 import jwt from "jsonwebtoken"
 import parser from "cookie-parser"
 
+import { fileURLToPath } from "url"
+import { dirname, join } from "path"
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+
 const app = express()
-app.use(express.static("public"))
+app.use(express.static(join(__dirname,"public")))
 app.set("view engine", "ejs");
+app.set("views",join(__dirname,"views"))
 app.use(parser())
 app.use(express.urlencoded({ extended: true }))
 app.get("/", (req, res) => {
