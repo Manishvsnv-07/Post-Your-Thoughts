@@ -5,9 +5,9 @@ import {posts} from "./module/post.js"
 import jwt from "jsonwebtoken"
 import parser from "cookie-parser"
 const app = express()
-const port = process.env.PORT || 3000
 app.use(express.static("public"))
 app.set("view engine", "ejs");
+require('dotenv').config();
 app.use(parser())
 app.use(express.urlencoded({ extended: true }))
 app.get("/", (req, res) => {
@@ -100,6 +100,9 @@ function islogged(req,res,next){
         next()
     }
 }
-app.listen(port, () => {
-    console.log(`My Port At ${port}`);
-})
+if (require.main === module) {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => console.log(`Running on ${PORT}`));
+}
+
+module.exports = app;
