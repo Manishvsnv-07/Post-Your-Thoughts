@@ -4,10 +4,12 @@ import { user } from "./module/user.js"
 import {posts} from "./module/post.js"
 import jwt from "jsonwebtoken"
 import parser from "cookie-parser"
+import dotenv from "dotenv"
+
 const app = express()
 app.use(express.static("public"))
 app.set("view engine", "ejs");
-require('dotenv').config();
+dotenv.config();
 app.use(parser())
 app.use(express.urlencoded({ extended: true }))
 app.get("/", (req, res) => {
